@@ -1,19 +1,60 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import styled from 'styled-components';
+import Badge from '@atlaskit/badge';
+import Avatar from '@atlaskit/avatar';
+import Table from './components/Table';
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 100px;
+`;
+
+const BaseLine = styled.div`
+  display: flex;
+  align-items: baseline;
+`;
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      pages: [
+        {
+          title: 'Team Members',
+          contents: [
+            { name: 'HHH', email: 'huanhuan.huang@safetyculture.io', status: <Badge appearance="added" value="Active" /> },
+            { name: 'Zhihao', email: 'zhihao.huang@safetyculture.io', status: <Badge appearance="primary" value="Invited" /> },
+            { name: 'Kevin', email: 'kevin.mchugh@safetyculture.io', status: <Badge appearance="important" value="Deactive" /> },
+          ],
+          headers: { name: 'Name', email: 'Email', status: 'Status' },
+        },
+        {
+          title: 'Groups',
+          contents: [
+            { name: 'Townsville', members: (<BaseLine>
+              <Avatar name="small" size="small" presence="online" />
+              <Avatar name="small" size="small" presence="online" />
+              <Avatar name="small" size="small" presence="online" />
+            </BaseLine>), createdBy: 'Tom dance' },
+          ],
+          headers: { name: 'Group names', members: 'Members', createdBy: 'Created by' },
+        }
+      ]
+    };
+  }
+
   render() {
+    const { headers, contents, title } = this.state.pages[1];
+
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      <Container>
+        <div>
+          <h1>{title}</h1>
+          <Table data={{ headers, contents }} />
+        </div>
+      </Container>
     );
   }
 }

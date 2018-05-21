@@ -235,7 +235,7 @@ export default class extends Component {
 ```
 
 
-##Introducing pages
+##Introducing pages**
 
 Both pages have table components, but the render content are different.
 
@@ -286,6 +286,7 @@ Tips: use library [https://atlaskit.atlassian.com/packages/core/avatar](https://
 
 **Expectation**
 
+[[https://github.com/SafetyCulture/react-workshop-teammanagement/blob/master/src/assets/challenge2.png]]
 
 
 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>

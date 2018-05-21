@@ -286,7 +286,7 @@ Tips: use library [https://atlaskit.atlassian.com/packages/core/avatar](https://
 
 **Expectation**
 
-[[https://github.com/SafetyCulture/react-workshop-teammanagement/blob/master/src/assets/challenge2.png]]
+![alt text](https://github.com/SafetyCulture/react-workshop-teammanagement/raw/master/src/assets/challenge2.png)
 
 
 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>

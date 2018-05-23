@@ -100,7 +100,7 @@ Imagined that we have some data is passed from the API
       { name: 'Zhihao', email: 'zhihao.huang@safetyculture.io', status: 'Invited', groups: 1, addedBy: 'Tristan Davey' },
       { name: 'Kevin', email: 'kevin.mchugh@safetyculture.io', status: 'Deactived', groups: 20, addedBy: 'Jo Walter' },
     ],
-    headers: {name: 'Name', email: 'Email', status: 'Status'}
+    headers: {name: 'Name', email: 'Email', status: 'Status', groups: 'Groups', addedBy: 'Added by' }
 }
 ```
 
@@ -255,10 +255,10 @@ export default class extends Component {
               <th key={index}>{headers[headerId]}</th>
             )}
           </tr>
-          {contents.map((content, contentIndex) =>
+          {rows.map((row, contentIndex) =>
             <tr key={contentIndex}>
               {headerIds.map((headerId, index) =>
-                <td key={index}>{content[headerId]}</td>
+                <td key={index}>{row[headerId]}</td>
               )}
             </tr>
           )}

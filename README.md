@@ -1,29 +1,47 @@
-## Create a table with content
+# React tutorial - Team management page
+
+## Purpose
+* Build a web page using react
+* Extract reusable component
+* Containers and component
+
+## Step by step tutorial
+
+### Create a table to display team members' information
 ```
         <table>
+          <thead>
+            <tr>
+              <th>Name</th><th>Email</th><th>Status</th>
+            </tr>
+          </thead>
           <tbody>
-          <tr>
-          <th>Name</th><th>Email</th><th>Status</th>
-          </tr>
-          <tr>
-            <td>HHH</td><td>huanhuan.huang@safetyculture.io</td><td>Active</td>
-          </tr>
-          <tr>
-            <td>Zhihao</td><td>zhihao.huang@safetyculture.io</td><td>Invited</td>          
-          </tr>
-          <tr>
-            <td>Kevin</td><td>kevin.mchugh@safetyculture.io</td><td>Deactive</td>
-          </tr>
+            <tr>
+              <td>HHH</td><td>huanhuan.huang@safetyculture.io</td><td>Active</td>
+            </tr>
+            <tr>
+              <td>Zhihao</td><td>zhihao.huang@safetyculture.io</td><td>Invited</td>          
+            </tr>
+            <tr>
+              <td>Kevin</td><td>kevin.mchugh@safetyculture.io</td><td>Deactive</td>
+            </tr>
           </tbody>
         </table>
 ```
 
-## Add style to table
+### Add some styles to the table
 
+**Shared style variables**
+
+Create a new file called `styles-variables`, then put it under `src`.
+
+````
+export const borderColor = '#EBEBEB';
+export const backgroundLight = '#F5F5F5';
+````
+
+**Define `Table` styled component in App.js**
 ```
-import { borderColor, backgroundLight } from './styles-variables';
-
-
 const Table = styled.table`
   border-collapse: collapse;
   border: 1px solid ${borderColor};
@@ -39,27 +57,50 @@ const Table = styled.table`
 `;
 ```
 
-**Reused style variables**
+**Extract styles like a mixin**
 
-Create a new file called `styles-variables`, then put it under `src`.
+```
+const border = `border: 1px solid ${borderColor};`
 
-````
-export const borderColor = '#EBEBEB';
-export const backgroundLight = '#F5F5F5';
-````
+const Table = styled.table`
+  border-collapse: collapse;
+  ${border}
 
-## Pass data into tables
+  th, td {
+    ${border}
+    padding: 1rem;
+  }
 
-Imagined that we have some data passed from the API
+  th {
+    background-color: ${backgroundLight};
+  }
+`;
+```
+
+## Dynamic table
+
+Imagined that we have some data is passed from the API
 
 ```
 {
-      data: [
-        { name: 'HHH', email: 'huanhuan.huang@safetyculture.io', status: 'Active' },
-        { name: 'Zhihao', email: 'zhihao.huang@safetyculture.io', status: 'Invited' },
-        { name: 'Kevin', email: 'kevin.mchugh@safetyculture.io', status: 'Deactive' },
-      ],
-      headers: { name: 'Name', email: 'Email', status: 'Status' }
+    data: [
+      { name: 'HHH', email: 'huanhuan.huang@safetyculture.io', status: 'Active' },
+      { name: 'Zhihao', email: 'zhihao.huang@safetyculture.io', status: 'Invited' },
+      { name: 'Kevin', email: 'kevin.mchugh@safetyculture.io', status: 'Deactive' },
+    ]
+}
+```
+
+**Massage the data to displayable**
+
+```
+{
+    data: [
+      { name: 'HHH', email: 'huanhuan.huang@safetyculture.io', status: 'Active' },
+      { name: 'Zhihao', email: 'zhihao.huang@safetyculture.io', status: 'Invited' },
+      { name: 'Kevin', email: 'kevin.mchugh@safetyculture.io', status: 'Deactive' },
+    ],
+    headers: {name: 'Name', email: 'Email', status: 'Status'}
 }
 ```
 
@@ -81,14 +122,14 @@ Imagined that we have some data passed from the API
   }
 ```
 
-- Read headers from the data when `render`
+- Get headers from the state in `render` method
 
 ```
-    const { headers, data } = this.state;
+    const { headers } = this.state;
     const headerIds = Object.keys(this.state.headers);
 ```
 
-- Dynamically general table header
+- Dynamically generate table header
 
 ```
             {headerIds.map((headerId, index) =>
@@ -100,27 +141,29 @@ Full code snippet
 
 ```
   render() {
-    const { headers, data } = this.state;
+    const { headers } = this.state;
     const headerIds = Object.keys(this.state.headers);
 
     return (
       <Container>
         <Table>
+          <thead>
+            <tr>
+              {headerIds.map((headerId, index) =>
+                <th key={index}>{headers[headerId]}</th>
+              )}
+            </tr>
+          </thead>
           <tbody>
-          <tr>
-            {headerIds.map((headerId, index) =>
-              <th key={index}>{headers[headerId]}</th>
-            )}
-          </tr>
-          <tr>
-            <td>HHH</td><td>huanhuan.huang@safetyculture.io</td><td>Active</td>
-          </tr>
-          <tr>
-            <td>Zhihao</td><td>zhihao.huang@safetyculture.io</td><td>Invited</td>
-          </tr>
-          <tr>
-            <td>Kevin</td><td>kevin.mchugh@safetyculture.io</td><td>Deactive</td>
-          </tr>
+            <tr>
+              <td>HHH</td><td>huanhuan.huang@safetyculture.io</td><td>Active</td>
+            </tr>
+            <tr>
+              <td>Zhihao</td><td>zhihao.huang@safetyculture.io</td><td>Invited</td>
+            </tr>
+            <tr>
+              <td>Kevin</td><td>kevin.mchugh@safetyculture.io</td><td>Deactive</td>
+            </tr>
           </tbody>
         </Table>
       </Container>
@@ -128,16 +171,21 @@ Full code snippet
   }
 ```
 
-**Your turn: dynamically generated table content
+## Your turn: dynamically generated table content
 
 **What you have**
-You have the data from previous exercise
+
+Data from the previous exercise
 
 
 
 **Expectation**
+
 Replace hard coded table content with the one from data
-Time frame: 10 minutes
+
+**Time frame**
+
+10 minutes
   
 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 

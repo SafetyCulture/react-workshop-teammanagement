@@ -24,11 +24,11 @@ class App extends Component {
         {
           title: 'Team Members',
           contents: [
-            { name: 'HHH', email: 'huanhuan.huang@safetyculture.io', status: <Badge appearance="added" value="Active" /> },
-            { name: 'Zhihao', email: 'zhihao.huang@safetyculture.io', status: <Badge appearance="primary" value="Invited" /> },
-            { name: 'Kevin', email: 'kevin.mchugh@safetyculture.io', status: <Badge appearance="important" value="Deactive" /> },
+            { name: 'HHH', email: 'huanhuan.huang@safetyculture.io', status: <Badge appearance="added" value="Active" />, groups: 5, addedBy: 'Tom Dance' },
+            { name: 'Zhihao', email: 'zhihao.huang@safetyculture.io', status: <Badge appearance="primary" value="Invited" />, groups: 1, addedBy: 'Tristan Davey' },
+            { name: 'Kevin', email: 'kevin.mchugh@safetyculture.io', status: <Badge appearance="important" value="Deactive" />, groups: 20, addedBy: 'Jo Walter' },
           ],
-          headers: { name: 'Name', email: 'Email', status: 'Status' },
+          headers: { name: 'Name', email: 'Email', status: 'Status', groups: 'Groups', addedBy: 'Added by' },
         },
         {
           title: 'Groups',
@@ -39,14 +39,14 @@ class App extends Component {
               <Avatar name="small" size="small" presence="online" />
             </BaseLine>), createdBy: 'Tom dance' },
           ],
-          headers: { name: 'Group names', members: 'Members', createdBy: 'Created by' },
+          headers: { name: 'Group names', members: 'Members' },
         }
       ]
     };
   }
 
   render() {
-    const { headers, contents, title } = this.state.pages[1];
+    const { headers, contents, title } = this.state.pages[0];
 
     return (
       <Container>

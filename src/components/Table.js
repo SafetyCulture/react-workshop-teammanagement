@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { borderColor, backgroundLight } from '../styles-variables';
 
+const border = `border: 1px solid ${borderColor};`
+
 const Table = styled.table`
   border-collapse: collapse;
-  border: 1px solid ${borderColor};
+  ${border}
 
   th, td {
-    border: 1px solid ${borderColor};
+    ${border}
     padding: 1rem;
   }
 

@@ -23,7 +23,7 @@
               <td>Zhihao</td><td>zhihao.huang@safetyculture.io</td><td>Invited</td>          
             </tr>
             <tr>
-              <td>Kevin</td><td>kevin.mchugh@safetyculture.io</td><td>Deactive</td>
+              <td>Kevin</td><td>kevin.mchugh@safetyculture.io</td><td>Deactived</td>
             </tr>
           </tbody>
         </table>
@@ -84,9 +84,9 @@ Imagined that we have some data is passed from the API
 ```
 {
     data: [
-      { name: 'HHH', email: 'huanhuan.huang@safetyculture.io', status: 'Active' },
-      { name: 'Zhihao', email: 'zhihao.huang@safetyculture.io', status: 'Invited' },
-      { name: 'Kevin', email: 'kevin.mchugh@safetyculture.io', status: 'Deactive' },
+      { name: 'HHH', email: 'huanhuan.huang@safetyculture.io', status: 'Active', groups: 5, addedBy: 'Tom Dance' },
+      { name: 'Zhihao', email: 'zhihao.huang@safetyculture.io', status: 'Invited', groups: 1, addedBy: 'Tristan Davey' },
+      { name: 'Kevin', email: 'kevin.mchugh@safetyculture.io', status: 'Deactived', groups: 20, addedBy: 'Jo Walter' },
     ]
 }
 ```
@@ -95,10 +95,10 @@ Imagined that we have some data is passed from the API
 
 ```
 {
-    data: [
-      { name: 'HHH', email: 'huanhuan.huang@safetyculture.io', status: 'Active' },
-      { name: 'Zhihao', email: 'zhihao.huang@safetyculture.io', status: 'Invited' },
-      { name: 'Kevin', email: 'kevin.mchugh@safetyculture.io', status: 'Deactive' },
+    rows: [
+      { name: 'HHH', email: 'huanhuan.huang@safetyculture.io', status: 'Active', groups: 5, addedBy: 'Tom Dance' },
+      { name: 'Zhihao', email: 'zhihao.huang@safetyculture.io', status: 'Invited', groups: 1, addedBy: 'Tristan Davey' },
+      { name: 'Kevin', email: 'kevin.mchugh@safetyculture.io', status: 'Deactived', groups: 20, addedBy: 'Jo Walter' },
     ],
     headers: {name: 'Name', email: 'Email', status: 'Status'}
 }
@@ -112,10 +112,10 @@ Imagined that we have some data is passed from the API
   constructor(props) {
     super(props);
     this.state = {
-      data: [
-        { name: 'HHH', email: 'huanhuan.huang@safetyculture.io', status: 'Active' },
-        { name: 'Zhihao', email: 'zhihao.huang@safetyculture.io', status: 'Invited' },
-        { name: 'Kevin New', email: 'kevin.mchugh@safetyculture.io', status: 'Deactive' },
+      rows: [
+        { name: 'HHH', email: 'huanhuan.huang@safetyculture.io', status: 'Active', groups: 5, addedBy: 'Tom Dance' },
+        { name: 'Zhihao', email: 'zhihao.huang@safetyculture.io', status: 'Invited', groups: 1, addedBy: 'Tristan Davey' },
+        { name: 'Kevin', email: 'kevin.mchugh@safetyculture.io', status: 'Deactived', groups: 20, addedBy: 'Jo Walter' },
       ],
       headers: { name: 'Name', email: 'Email', status: 'Status' }
     };
@@ -162,7 +162,7 @@ Full code snippet
               <td>Zhihao</td><td>zhihao.huang@safetyculture.io</td><td>Invited</td>
             </tr>
             <tr>
-              <td>Kevin</td><td>kevin.mchugh@safetyculture.io</td><td>Deactive</td>
+              <td>Kevin</td><td>kevin.mchugh@safetyculture.io</td><td>Deactived</td>
             </tr>
           </tbody>
         </Table>
@@ -192,38 +192,38 @@ Replace hard coded table content with the one from data
 **Solution**
 
 ```
-          {contents.map((content, contentIndex) =>
-            <tr key={contentIndex}>
+          {rows.map((row, rowIndex) =>
+            <tr key={rowIndex}>
               {headerIds.map((headerId, index) =>
-                <td key={index}>{content[headerId]}</td>
+                <td key={index}>{row[headerId]}</td>
               )}
             </tr>
           )}
 ```
 
-## Apply the badge component
+### Apply the badge component
 
 We need to massage the data to include the badge component
 ```
 {
-      data: [
-        { name: 'HHH', email: 'huanhuan.huang@safetyculture.io', status: <Badge appearance="added" value="Active" /> },
-        { name: 'Zhihao', email: 'zhihao.huang@safetyculture.io', status: <Badge appearance="primary" value="Invited" /> },
-        { name: 'Kevin', email: 'kevin.mchugh@safetyculture.io', status: <Badge appearance="important" value="Deactived" /> },
+      rows: [
+        { name: 'HHH', email: 'huanhuan.huang@safetyculture.io', status: <Badge appearance="added" value="Active" />, groups: 5, addedBy: 'Tom Dance' },
+        { name: 'Zhihao', email: 'zhihao.huang@safetyculture.io', status: <Badge appearance="primary" value="Invited" />, groups: 1, addedBy: 'Tristan Davey' },
+        { name: 'Kevin', email: 'kevin.mchugh@safetyculture.io', status: <Badge appearance="important" value="Deactived" />, groups: 20, addedBy: 'Jo Walter' },
       ],
       headers: { name: 'Name', email: 'Email', status: 'Status' }
 }
 ```
 
-## Extract table component
+### Extract table component
 
 **Create a new file under `components` folder called `Table.js`**
 
-Define a Table component. We can pass headers and content into the component as its properties. We decide what to pass in. And table will be in charge of rendering those data.
+If we have a table component. We can reuse it in other page. All we need to do is to pass data to it for rendering.
 
-We slowly migrate the table related JSX from App.js to Table.js.
+Let's slowly migrate the table related JSX from `App.js` to `Table.js`.
 
-Finally, Table.js becomes
+Table.js
 ```
 import React, { Component } from 'react';
 import styled from 'styled-components';
@@ -245,7 +245,7 @@ const Table = styled.table`
 
 export default class extends Component {
   render() {
-    const { headers, contents } = this.props.data;
+    const { headers, rows } = this.props.data;
     const headerIds = Object.keys(headers);
     return (
       <Table>
@@ -272,97 +272,132 @@ export default class extends Component {
 `render` function in App.js becomes
 ```
   render() {
-    const { headers, contents } = this.state;
+    const { headers, rows } = this.state;
 
     return (
       <Container>
-        <Table data={{ headers, contents }} />
+        <Table data={{ headers, rows }} />
       </Container>
     );
   }
 ```
 
 
-##Introducing pages**
+### Containers & components
 
-Both pages have table components, but the render content are different.
+What is the difference between containers and component? [https://medium.com/@learnreact/container-components-c0e67432e005](https://medium.com/@learnreact/container-components-c0e67432e005)
 
-Let's modify the data to has the concept of pages
+
+**Let's create our first container**
+
+Create a new file called `MembersContainer.js` in new folder `containers`
+
+Extract most code related to members to `MembersContainer.js`
+
+In MembersContainer.js
 
 ```
+import React, { Component } from 'react';
+import Badge from '@atlaskit/badge';
+import Table from '../components/Table';
+
+export default class extends Component {
+  constructor(props) {
+    super(props);
     this.state = {
-      pages: [
-        {
-          title: 'Team Members',
-          contents: [
-            { name: 'HHH', email: 'huanhuan.huang@safetyculture.io', status: <Badge appearance="added" value="Active" /> },
-            { name: 'Zhihao', email: 'zhihao.huang@safetyculture.io', status: <Badge appearance="primary" value="Invited" /> },
-            { name: 'Kevin', email: 'kevin.mchugh@safetyculture.io', status: <Badge appearance="important" value="Deactive" /> },
-          ],
-          headers: { name: 'Name', email: 'Email', status: 'Status' },
-        },
-        {
-          title: 'Groups',
-          contents: [
-            { name: 'Townsville', members: 'huanhuan.huang@safetyculture.io', createdBy: 'Tom dance' },
-          ],
-          headers: { name: 'Group names', members: 'Members', createdBy: 'Created by' },
-        }
-      ]
+      rows: [
+        { name: 'HHH', email: 'huanhuan.huang@safetyculture.io', status: <Badge appearance="added" value="Active" />, groups: 5, addedBy: 'Tom Dance' },
+        { name: 'Zhihao', email: 'zhihao.huang@safetyculture.io', status: <Badge appearance="primary" value="Invited" />, groups: 1, addedBy: 'Tristan Davey' },
+        { name: 'Kevin', email: 'kevin.mchugh@safetyculture.io', status: <Badge appearance="important" value="Deactived" />, groups: 20, addedBy: 'Jo Walter' },
+      ],
+      headers: { name: 'Name', email: 'Email', status: 'Status', groups: 'Groups', addedBy: 'Added by' },
     };
-```
+  }
 
-And then in `render` function
-
-```
   render() {
-    const { headers, contents, title } = this.state.pages[0];
+    const { headers, rows } = this.state;
 
     return (
+      <div>
+        <h1>Team Members</h1>
+        <Table data={{ headers, rows }} />
+      </div>
+    );
+  }
+}
+```
+
+In App.js
+
+```
+import React, { Component } from 'react';
+import styled from 'styled-components';
+import MembersContainer from './containers/MembersContainer';
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 100px;
+`;
+
+class App extends Component {
+  render() {
+    return (
       <Container>
-        <div>
-          <h1>{title}</h1>
-          <Table data={{ headers, contents }} />
-        </div>
+        <MembersContainer />
       </Container>
     );
   }
+}
+
+export default App;
 ```
 
-##Challenge: Change the members data in 'Groups' page into 3 avatars
-Tips: use library [https://atlaskit.atlassian.com/packages/core/avatar](https://atlaskit.atlassian.com/packages/core/avatar)
+### Advanced on table component - sorting
 
-**Expectation**
-
-![Challenge](https://github.com/SafetyCulture/react-workshop-teammanagement/raw/master/src/assets/challenge2.png)
-
-
-<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-
-**Solution**
-
-In terminal
+**Allow sorting information stored in the headers in `Table.js`**
 ```
-yarn add @atlaskit/avatar
-```
+  constructor(props) {
+    super(props);
+    const { headers, rows } = this.props.data;
+    const headerIds = Object.keys(headers);
+    const sortableHeaders = {};
 
-Import Avatar to App component
+    headerIds.forEach(headerId => {
+      sortableHeaders[headerId] = {
+        label: headers[headerId],
+        asc: true
+      }
+    });
 
-```
-import Avatar from '@atlaskit/avatar';
+    this.state = { rows, headers: sortableHeaders }
+  }
 ```
 
-Replace `members` in the second page data with this.
-```
-            <div>
-              <Avatar name="small" size="small" presence="online" />
-              <Avatar name="small" size="small" presence="online" />
-              <Avatar name="small" size="small" presence="online" />
-            </div>
+**Add an `onClick` Event to table header**
+
 ```
 
+              <th key={index} onClick={() => this.sort(headerId)}>{headers[headerId].label}</th>
+```
 
+**The sorting logic**
 
+```
+  sort = (headerId) => {
+    let { headers, rows } = this.state;
+
+    if (headers[headerId].asc) {
+      rows = rows.sort((row1, row2) => row1[headerId] > row2[headerId])
+    } else {
+      rows = rows.sort((row1, row2) => row1[headerId] < row2[headerId])
+    }
+    headers[headerId].asc = !headers[headerId].asc;
+
+    this.setState({ rows, headers });
+  }
+```
 
 
 

@@ -19,15 +19,44 @@ const Table = styled.table`
 `;
 
 export default class extends Component {
-  render() {
+  constructor(props) {
+    super(props);
     const { headers, rows } = this.props.data;
+    const headerIds = Object.keys(headers);
+    const sortableHeaders = {};
+
+    headerIds.forEach(headerId => {
+      sortableHeaders[headerId] = {
+        label: headers[headerId],
+        asc: true
+      }
+    });
+
+    this.state = { rows, headers: sortableHeaders }
+  }
+
+  sort = (headerId) => {
+    let { headers, rows } = this.state;
+
+    if (headers[headerId].asc) {
+      rows = rows.sort((row1, row2) => row1[headerId] > row2[headerId])
+    } else {
+      rows = rows.sort((row1, row2) => row1[headerId] < row2[headerId])
+    }
+    headers[headerId].asc = !headers[headerId].asc;
+
+    this.setState({ rows, headers });
+  }
+
+  render() {
+    const { headers, rows } = this.state;
     const headerIds = Object.keys(headers);
     return (
       <Table>
         <tbody>
           <tr>
             {headerIds.map((headerId, index) =>
-              <th key={index}>{headers[headerId]}</th>
+              <th key={index} onClick={() => this.sort(headerId)}>{headers[headerId].label}</th>
             )}
           </tr>
           {rows.map((row, rowIndex) =>

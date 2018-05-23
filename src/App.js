@@ -23,16 +23,16 @@ class App extends Component {
       pages: [
         {
           title: 'Team Members',
-          contents: [
-            { name: 'HHH', email: 'huanhuan.huang@safetyculture.io', status: <Badge appearance="added" value="Active" />, groups: 5, addedBy: 'Tom Dance' },
-            { name: 'Zhihao', email: 'zhihao.huang@safetyculture.io', status: <Badge appearance="primary" value="Invited" />, groups: 1, addedBy: 'Tristan Davey' },
-            { name: 'Kevin', email: 'kevin.mchugh@safetyculture.io', status: <Badge appearance="important" value="Deactive" />, groups: 20, addedBy: 'Jo Walter' },
+          rows: [
+            { name: 'HHH', email: 'huanhuan.huang@safetyculture.io', status: 'Active', groups: 5, addedBy: 'Tom Dance' },
+            { name: 'Zhihao', email: 'zhihao.huang@safetyculture.io', status: 'Invited', groups: 1, addedBy: 'Tristan Davey' },
+            { name: 'Kevin', email: 'kevin.mchugh@safetyculture.io', status: 'Deactived', groups: 20, addedBy: 'Jo Walter' },
           ],
           headers: { name: 'Name', email: 'Email', status: 'Status', groups: 'Groups', addedBy: 'Added by' },
         },
         {
           title: 'Groups',
-          contents: [
+          rows: [
             { name: 'Townsville', members: (<BaseLine>
               <Avatar name="small" size="small" presence="online" />
               <Avatar name="small" size="small" presence="online" />
@@ -46,13 +46,13 @@ class App extends Component {
   }
 
   render() {
-    const { headers, contents, title } = this.state.pages[0];
+    const { headers, rows, title } = this.state.pages[0];
 
     return (
       <Container>
         <div>
           <h1>{title}</h1>
-          <Table data={{ headers, contents }} />
+          <Table data={{ headers, rows }} />
         </div>
       </Container>
     );

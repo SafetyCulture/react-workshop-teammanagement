@@ -20,7 +20,7 @@ const Table = styled.table`
 
 export default class extends Component {
   render() {
-    const { headers, contents } = this.props.data;
+    const { headers, rows } = this.props.data;
     const headerIds = Object.keys(headers);
     return (
       <Table>
@@ -30,10 +30,10 @@ export default class extends Component {
               <th key={index}>{headers[headerId]}</th>
             )}
           </tr>
-          {contents.map((content, contentIndex) =>
-            <tr key={contentIndex}>
+          {rows.map((row, rowIndex) =>
+            <tr key={rowIndex}>
               {headerIds.map((headerId, index) =>
-                <td key={index}>{content[headerId]}</td>
+                <td key={index}>{row[headerId]}</td>
               )}
             </tr>
           )}

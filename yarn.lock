@@ -8,9 +8,10 @@
   dependencies:
     prop-types "^15.5.10"
 
-"@atlaskit/avatar@^10.0.6":
-  version "10.0.6"
-  resolved "https://registry.yarnpkg.com/@atlaskit/avatar/-/avatar-10.0.6.tgz#f8e1ff857f96d98ae27fb00217034208321adeff"
+"@atlaskit/avatar@^10.0.7":
+  version "10.0.7"
+  resolved "https://registry.yarnpkg.com/@atlaskit/avatar/-/avatar-10.0.7.tgz#83025dd30dc56d1054b8ddb02f7163a3df5dedf2"
+  integrity sha512-AeePza+i/yHmSlppLZ7nZ3E4TvwB+5G6CXQqB58av+adUAwAyvMaIeKIk4aDn6hyZPJbi5Bs+nj91Z6EG9wMaQ==
   dependencies:
     "@atlaskit/dropdown-menu" "^4.0.3"
     "@atlaskit/item" "^6.0.3"
